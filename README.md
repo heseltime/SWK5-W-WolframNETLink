@@ -57,7 +57,7 @@ WolframNETLink
 └── MainImplementation3.cs
 ```
 
-### MainImplementation1: Simple PrimeFactor example, interesting: conversion to array of the return values
+### MainImplementation1: PrimeFactor example with array conversion to handle evaluation result
 
 The most interesting code here is the one making the call to the kernel evaluation, inside the infrastructure code, storing it in a suitable container and printing to console:
 
