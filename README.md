@@ -351,6 +351,8 @@ A note on tread safety as far as expressions go:
 
 ### .NET/Link API Version 1.7
 
+Per the [official Wolfram documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.html).
+
 #### Classes
 
 | Class                        | Description                                                                                                                                    |
