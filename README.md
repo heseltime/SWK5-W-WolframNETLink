@@ -281,9 +281,9 @@ public static class MainImplementation1
 
 The result of running will be similar for this implementation:
 
-![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/91b56660-771d-40c7-beb6-82baf2d2365c)
+![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/d5daf740-e19f-4535-a9e1-cc52366be63c)
 
-But the evaluation-processing back on the .Net side is different, now using an expression representation, for which there are two main use cases (the first is used here):
+But the evaluation-processing back on the .Net side is different, now using an expression representation, for which there are two main use cases (the first is used here, to read via **GetExpr**, see the documentation at the end of this readme, and process the result and output some metadata):
 
 ```
 Expr e = ml.GetExpr();
@@ -291,6 +291,8 @@ Expr e = ml.GetExpr();
 otherML.Put(e);
 e.Dispose();
 ```
+
+This leads to a possibility of writing to the MathLink later.
 
 > [!TIP]
 > Many of the IKernelLink methods take either a string or an Expr. If it is not convenient to build a string of Mathematica input, you can use an Expr. There are two ways to build an Expr: you can use a constructor, or you can create a loopback link as a scratchpad, build the expression on this link with a series of Put calls, then read the expression off the loopback link using GetExpr. Here is an example that creates an Expr that represents 2+2 and computes it in Mathematica using these two techniques:
