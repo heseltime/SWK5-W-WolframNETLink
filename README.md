@@ -57,7 +57,9 @@ WolframNETLink
 └── MainImplementation3.cs
 ```
 
-### MainImplementation1: PrimeFactor example with array conversion to handle evaluation result
+### MainImplementation1: PrimeFactor 
+
+**A simple example with array conversion to handle evaluation result**
 
 The most interesting code here is the one making the call to the kernel evaluation, inside the infrastructure code, storing it in a suitable container and printing to console:
 
@@ -77,8 +79,19 @@ for (int i = 0; i < factorResult.GetLength(0); i++)
 
 ![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b91d8138-5125-43ff-be7d-d938000d1d57)
 
-### MainImplementation2: Expr tests! See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side
-### MainImplementation3: Full-fledged async example with callback/delagate firing
+### MainImplementation2: Expr tests! 
+
+**See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.**
+
+### MainImplementation3: Async Programming
+
+**Full-fledged async example with callback/delagate firing**
+
+A note on tread safety as far as expressions go:
+
+>[!TIP]
+>Like Mathematica expressions, Exprs are immutable, meaning they can never be changed once they are created. Operations that might appear to modify an Expr (like Delete) return new modified Exprs without changing the original. Because Exprs are immutable, they are also thread-safe, meaning that any number of threads can access a given Expr at the same time.
+
 
 ## Console Usage
 
