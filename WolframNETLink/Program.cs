@@ -20,12 +20,16 @@ namespace WolframAlphaLocal
                     MainImplementation2.Run();
                     break;
                 case "3":
-                    MainImplementation3.Run();
+                    Task.WaitAll(RunImplementation3());
                     break;
                 default:
                     Console.WriteLine("Invalid input. Please specify 1, 2, or 3.");
                     break;
             }
+        }
+        private static async Task RunImplementation3()
+        {
+            await MainImplementation3.Run();
         }
     }
 }

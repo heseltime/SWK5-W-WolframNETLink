@@ -9,43 +9,24 @@ namespace WolframNETLink
 {
     public static class MainImplementation3
     {
-        public static void Run()
+        public static async Task Run()
         {
-            // Initialize the Wolfram Engine
-            IKernelLink ml = MathLinkFactory.CreateKernelLink();
-
-            try
+            var wolframLogic = new WolframLogic();
+            wolframLogic.OnNewEvaluation += (result) =>
             {
-                // Discard the initial InputNamePacket the kernel will send
-                ml.WaitAndDiscardAnswer();
+                Console.WriteLine($"New Evaluation Result: {result}");
+            };
 
-                ml.Evaluate("FactorInteger[123456789]");
-                ml.WaitForAnswer();
+            wolframLogic.OnNewEvaluation += (result) =>
+            {
+                // send logic
+                Console.WriteLine("   - sending now ... sent.");
+            };
 
-                // Read the result as a 2D array of integers
-                object result = ml.GetArray(typeof(int), 2);
-                if (result is int[,] factorResult)
-                {
-                    Console.WriteLine("Implementation 1 - Factors of 123456789:");
-                    for (int i = 0; i < factorResult.GetLength(0); i++)
-                    {
-                        Console.WriteLine($"Prime: {factorResult[i, 0]}, Exponent: {factorResult[i, 1]}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Unexpected result type.");
-                }
-            }
-            catch (MathLinkException e)
-            {
-                Console.WriteLine($"MathLinkException: {e.Message}");
-            }
-            finally
-            {
-                // Always close the link when done
-                ml.Close();
-            }
+            await wolframLogic.StartAsync();
+            Console.WriteLine("Press Enter to exit.");
+            Console.ReadLine();
+            wolframLogic.Stop();
         }
     }
 }
