@@ -275,7 +275,7 @@ public static class MainImplementation1
 }
 ```
 
-### MainImplementation2: Expr tests! 
+### MainImplementation2: Expr Tests! 
 
 [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side: the main method under test here is **GetArray**.
 
@@ -292,7 +292,7 @@ otherML.Put(e);
 e.Dispose();
 ```
 
-This leads to a possibility of writing to the MathLink later.
+This leads to a possibility of later writing to the MathLink - as the central communication element, implementing `IKernelLink` and produced by `MathLinkFactory`, providing the methods `WaitAndDiscardAnswer`, `Evaluate`, `WaitForAnswer` and importantly `GetExpr`.
 
 > [!TIP]
 > Many of the IKernelLink methods take either a string or an Expr. If it is not convenient to build a string of Mathematica input, you can use an Expr. There are two ways to build an Expr: you can use a constructor, or you can create a loopback link as a scratchpad, build the expression on this link with a series of Put calls, then read the expression off the loopback link using GetExpr. Here is an example that creates an Expr that represents 2+2 and computes it in Mathematica using these two techniques:
