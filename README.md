@@ -192,6 +192,23 @@ The available getters provided by MathLink as an object/class (interface, actual
   Reads a Mathematica symbol as a string.
 ```
 
+Examples of metadata you can get out of the expression representation is printed afterwards:
+
+```
+// Example: Other things you can do with the Expr object
+// Print the head of the expression
+Console.WriteLine("Head of the result: " + result.Head);
+
+// Check the type of the expression
+Console.WriteLine("Is the result a list? " + result.ListQ());
+
+// Get the length of the expression (number of parts)
+Console.WriteLine("Number of parts: " + result.Length);
+
+// Convert the entire expression to a string
+Console.WriteLine("Expression as a string: " + result.StringQ());
+```
+
 ### MainImplementation1: PrimeFactor 
 
 **A simple example with array conversion to handle evaluation result**
