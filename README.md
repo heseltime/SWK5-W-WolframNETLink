@@ -85,6 +85,21 @@ for (int i = 0; i < factorResult.GetLength(0); i++)
 
 ![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b91d8138-5125-43ff-be7d-d938000d1d57)
 
+**Update**: The correct method for retrieving a 2D array from the Wolfram.NETLink is to use the GetArray method
+
+```
+// Read the result as a 2D array of integers
+object result = ml.GetArray(typeof(int), 2); // <-- Correct way to do the conversion
+if (result is int[,] factorResult)
+{
+    Console.WriteLine("Implementation 1 - Factors of 123456789:");
+    for (int i = 0; i < factorResult.GetLength(0); i++)
+    {
+        Console.WriteLine($"Prime: {factorResult[i, 0]}, Exponent: {factorResult[i, 1]}");
+    }
+}
+```
+
 ### MainImplementation2: Expr tests! 
 
 **See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.**
