@@ -212,7 +212,7 @@ for (int i = 0; i < factorResult.GetLength(0); i++)
 
 ![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b91d8138-5125-43ff-be7d-d938000d1d57)
 
-**Update**: The correct method for retrieving a 2D array from the Wolfram.NETLink is to use the GetArray method
+**Update**: The correct method for retrieving a 2D array from the Wolfram.NETLink is to use the **GetArray** method
 
 ```
 // Read the result as a 2D array of integers
@@ -275,7 +275,66 @@ public static class MainImplementation1
 
 ### MainImplementation2: Expr tests! 
 
-**See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.**
+[Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side: the main method under test here is **GetArray**.
+
+The result of running will be similar for this implementation:
+
+![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/91b56660-771d-40c7-beb6-82baf2d2365c)
+
+But the evaluation-processing back on the .Net side is different, now using an expression representation, for which there are two main use cases (the first is used here):
+
+```
+Expr e = ml.GetExpr();
+// ... Later, write it to a different MathLink:
+otherML.Put(e);
+e.Dispose();
+```
+
+> [!TIP]
+> Many of the IKernelLink methods take either a string or an Expr. If it is not convenient to build a string of Mathematica input, you can use an Expr. There are two ways to build an Expr: you can use a constructor, or you can create a loopback link as a scratchpad, build the expression on this link with a series of Put calls, then read the expression off the loopback link using GetExpr. Here is an example that creates an Expr that represents 2+2 and computes it in Mathematica using these two techniques:
+
+```
+// First method: Build it using Expr constructors:
+Expr symbolPlus = new Expr(ExpressionType.Symbol, "Plus");
+Expr e1 = new Expr(symbolPlus, 2, 2);
+// ml is a KernelLink
+string result = ml.EvaluateToOutputForm(e1, 0);
+   
+// Second method: Build it on an ILoopbackLink with MathLink calls:
+ILoopbackLink loop = MathLinkFactory.CreateLoopbackLink();
+loop.PutFunction("Plus", 2);
+loop.Put(2);
+loop.Put(2);
+Expr e2 = loop.GetExpr();
+loop.Close();
+result = ml.EvaluateToOutputForm(e2, 0);
+e2.Dispose();
+```
+
+(Following the [expression class reference](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html).)
+
+In the code the relevant part looks like:
+
+```
+// Get the result as an expression
+Expr result = ml.GetExpr();
+
+// Process the result
+if (result.Head.ToString() == "List")
+{
+    Console.WriteLine("Implementation 2 - Factors of 123456789:");
+    foreach (Expr factor in result.Args)
+    {
+        int prime = (int)factor.Part(1).AsInt64();
+        int exponent = (int)factor.Part(2).AsInt64();
+        Console.WriteLine($"Prime: {prime}, Exponent: {exponent}");
+    }
+}
+else
+{
+    Console.WriteLine("Unexpected result type.");
+}
+```
 
 ### MainImplementation3: Async Programming
 
