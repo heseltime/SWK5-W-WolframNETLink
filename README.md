@@ -357,6 +357,23 @@ else
 }
 ```
 
+The expression can then be used to access metadata and use Mathematica/WL style checks, like `ListQ`.
+
+```
+// Example: Other things you can do with the Expr object
+// Print the head of the expression
+Console.WriteLine("Head of the result: " + result.Head);
+
+// Check the type of the expression
+Console.WriteLine("Is the result a list? " + result.ListQ());
+
+// Get the length of the expression (number of parts)
+Console.WriteLine("Number of parts: " + result.Length);
+
+// Convert the entire expression to a string
+Console.WriteLine("Expression as a string: " + result.StringQ());
+```
+
 ### MainImplementation3: Async Programming
 
 **Full-fledged async example with callback/delagate firing**
