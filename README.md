@@ -57,9 +57,28 @@ WolframNETLink
 └── MainImplementation3.cs
 ```
 
-### **1**: Simple PrimeFactor example, interesting: conversion to array of the return values.
-### **2**: Expr tests! See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.
-### **3**: Full-fledged async example with callback/delagate firing.
+### MainImplementation1: Simple PrimeFactor example, interesting: conversion to array of the return values
+
+The most interesting code here is the one making the call to the kernel evaluation, inside the infrastructure code, storing it in a suitable container and printing to console:
+
+```
+// Send a more complex command
+ml.Evaluate("FactorInteger[123456789]");
+ml.WaitForAnswer();
+
+// Read the result as a 2D array of integers
+int[,] factorResult = (int[,])ml.GetArray(typeof(int), 2);
+Console.WriteLine("Factors of 123456789:");
+for (int i = 0; i < factorResult.GetLength(0); i++)
+{
+    Console.WriteLine($"Prime: {factorResult[i, 0]}, Exponent: {factorResult[i, 1]}");
+}
+```
+
+![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b91d8138-5125-43ff-be7d-d938000d1d57)
+
+### MainImplementation2: Expr tests! See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side
+### MainImplementation3: Full-fledged async example with callback/delagate firing
 
 ## Console Usage
 
