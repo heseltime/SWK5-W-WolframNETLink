@@ -54,3 +54,4 @@ WolframNETLink
 
 - **1**: Simple PrimeFactor example, interesting: conversion to array of the return values.
 - **2**: Expr tests! See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.
+- **3**: Full-fledged async example with callback/delagate firing.
