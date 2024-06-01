@@ -35,9 +35,14 @@ I found that the post-build process _is_ necessary. (May 2024)
 
 ## Tech Background: Symbolic Protocol
 
+> [!NOTE]  
 > The Wolfram Symbolic Transfer Protocol (WSTP) is a platform-independent protocol for communicating between programs. In more concrete terms, it is a means to send and receive Wolfram Language **expressions**. WSTP is the means by which the notebook front end and kernel communicate with each other. It is also used by a large number of commercial and freeware applications and utilities that link the Wolfram Language and other programs or languages. It is implemented as a library of C-language functions. .NET/Link brings the capabilities of WSTP into .NET in a way that is simpler to use and much more powerful than the raw C-level API.
 
-From [Calling the Wolfram Language from .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (May 31st, 2024, my **highlight**: we look at [expression](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) handling on the .NET side in example 2 in the following)
+From [Calling the Wolfram Language from .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (May 31st, 2024, my **highlight**: we look at [expression](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) handling on the .NET side in example 2 in the following, but ...) The idea boils down to the following:
+
+> [!IMPORTANT]  
+> The Expr class is a representation of arbitrary Mathematica expressions in .NET. Exprs are created by reading an expression from a link (using the GetExpr method), they can be decomposed into component Exprs with properties and methods like Head and Part, and their structure can be queried with methods like Length, NumberQ, and VectorQ. All these methods will be familiar to Mathematica programmers, and their Expr counterparts work similarly.
+> From [relevant WL reference](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html)
 
 ## Project Structure
 
@@ -58,5 +63,5 @@ WolframNETLink
 
 ## Console Usage
 
-> [!IMPORTANT]  
+> [!WARNING]  
 > TODO
