@@ -285,9 +285,3 @@ A note on tread safety as far as expressions go:
 
 >[!TIP]
 >Like Mathematica expressions, Exprs are immutable, meaning they can never be changed once they are created. Operations that might appear to modify an Expr (like Delete) return new modified Exprs without changing the original. Because Exprs are immutable, they are also thread-safe, meaning that any number of threads can access a given Expr at the same time.
-
-
-## Console Usage
-
-> [!WARNING]  
-> TODO
