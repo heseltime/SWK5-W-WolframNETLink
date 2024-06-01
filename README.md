@@ -1,4 +1,4 @@
-# WolframNETLink Tests
+# WolframNETLink 💥🔗 - Some Tests 🥼
 
 Let's look at calling Wolfram [Mathematica locally using .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (C#) by leveraging the Wolfram .NET/Link library. This allows for running Wolfram Language code directly from .NET applications. I'll want to compare this with WolframAlpha calls over http since the local approach does require some:
 
