@@ -394,9 +394,7 @@ Per the [official Wolfram documentation](https://reference.wolfram.com/language/
 | `MathLinkMessage`            | Designates the type of a low-level MathLink message.                                                     |
 | `PacketType`                 | Designates a MathLink packet type. Used by the `PacketHandler` delegate, and returned by `NextPacket`.    |
 
-## Expr Members (.NET/Link API Version 1.7)
-
-### Expr Overview
+### Expr Members (.NET/Link API Version 1.7)
 
 #### Public Static (Shared) Fields
 
