@@ -394,5 +394,5 @@ Per the [official Wolfram documentation](https://reference.wolfram.com/language/
 | `MathLinkMessage`            | Designates the type of a low-level MathLink message.                                                     |
 | `PacketType`                 | Designates a MathLink packet type. Used by the `PacketHandler` delegate, and returned by `NextPacket`.    |
 
-© 2003-2024, Wolfram Research, Inc.
+(Referenced June 1st, 2024.)
 
