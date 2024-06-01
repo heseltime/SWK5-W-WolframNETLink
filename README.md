@@ -59,9 +59,9 @@ WolframNETLink
 
 ### General Usage
 
-Follow the setup and start in Visual Studio, then select the implementation want to test out: You will see a Mathematical Kernel instance pop up in the background.
+Follow the setup and start in Visual Studio, then select the implementation want to test out: You will see a Mathematical Kernel instance pop up in the background: **That**'s the basis for this project and what we are testing.
 
-![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b4fe18ef-0cc9-4343-a994-b376c12e9933)
+![Screenshot 2024-06-01 143636](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/c35e7500-5ead-4154-9377-2fcd361aba55)
 
 ### MainImplementation1: PrimeFactor 
 
