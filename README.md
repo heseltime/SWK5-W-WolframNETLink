@@ -103,7 +103,7 @@ public static void Run()
 The available getters provided by MathLink as an object/class (interface, actually) are full listed [in the WL reference](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.IMathLinkMembers.html), here just the ones with "Get" in the name:
 
 ```markdown
-## IMathLink Methods with "Get" in the Name
+### IMathLink Methods with "Get" in the Name
 
 - `GetArgCount`  
   Reads the argument count of an expression being read manually.
