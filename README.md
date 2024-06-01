@@ -394,5 +394,88 @@ Per the [official Wolfram documentation](https://reference.wolfram.com/language/
 | `MathLinkMessage`            | Designates the type of a low-level MathLink message.                                                     |
 | `PacketType`                 | Designates a MathLink packet type. Used by the `PacketHandler` delegate, and returned by `NextPacket`.    |
 
+## Expr Members (.NET/Link API Version 1.7)
+
+### Expr Overview
+
+#### Public Static (Shared) Fields
+
+| Field         |
+|---------------|
+| `INT_MINUSONE` |
+| `INT_ONE`      |
+| `INT_ZERO`     |
+| `SYM_FALSE`    |
+| `SYM_INTEGER`  |
+| `SYM_LIST`     |
+| `SYM_REAL`     |
+| `SYM_STRING`   |
+| `SYM_SYMBOL`   |
+| `SYM_TRUE`     |
+
+#### Public Static (Shared) Methods
+
+| Method             | Description                                      |
+|--------------------|--------------------------------------------------|
+| `CreateFromLink`   | Creates an Expr by reading it off a link.        |
+
+#### Public Static (Shared) Operators and Type Conversions
+
+| Operator/Conversion                 | Description                                                                  |
+|-------------------------------------|------------------------------------------------------------------------------|
+| `Equality Operator`                 | Implements a value-based equality comparison similar to Mathematica's SameQ. |
+| `Inequality Operator`               | Implements a value-based inequality comparison.                              |
+| `Explicit Expr to Double Conversion`| Converts the Expr to a double value, same as calling the `AsDouble` method.  |
+| `Explicit Expr to Int64 Conversion` | Converts the Expr to a long integer value, same as calling the `AsInt64` method. |
+| `Explicit Expr to String Conversion`| Converts the Expr to a string representation, same as calling the `ToString` method. |
+
+#### Public Instance Constructors
+
+| Constructor | Description                  |
+|-------------|------------------------------|
+| `Expr`      | Overloaded. Creates a new Expr object. |
+
+#### Public Instance Properties
+
+| Property    | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `Args`      | Gets an array of Exprs representing the arguments of this Expr.             |
+| `Dimensions`| Gets an array of integers representing the dimensions of this Expr.         |
+| `Head`      | Gets the Expr representing the head of this Expr.                           |
+| `Item`      | Gets a part based on its position index. This is the indexer for the class. |
+| `Length`    | Gets the length of this Expr.                                               |
+
+#### Public Instance Methods
+
+| Method                | Description                                                                                                           |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `AsArray`             | Converts the Expr to an array of the requested type and depth.                                                        |
+| `AsDouble`            | Gives the double value for Exprs that can be represented as doubles.                                                  |
+| `AsInt64`             | Gives the Int64 value for Exprs that can be represented as integers.                                                  |
+| `AtomQ`               | Tells whether the Expr represents a Mathematica atom. Works like the Mathematica function `AtomQ`.                    |
+| `ComplexQ`            | Tells whether the Expr represents a Mathematica Complex number.                                                       |
+| `Delete`              | Returns a new Expr that has the same head but the nth element deleted. Works like the Mathematica function `Delete`.  |
+| `Dispose`             | Frees resources that the Expr uses internally.                                                                        |
+| `Equals`              | Implements a value-based equality comparison similar to Mathematica's `SameQ`.                                        |
+| `GetHashCode`         |                                                                                                                       |
+| `GetObjectData`       | Populates the `SerializationInfo` object with the Expr's internal state information.                                  |
+| `GetType`             | Inherited from `Object`.                                                                                              |
+| `Insert`              | Returns a new Expr that has the same head but with e inserted into position n. Works like the Mathematica function `Insert`. |
+| `IntegerQ`            | Tells whether the Expr represents a Mathematica integer. Works like the Mathematica function `IntegerQ`.              |
+| `ListQ`               | Tells whether the Expr represents a Mathematica list. Works like the Mathematica function `ListQ`.                    |
+| `MatrixQ`             | Overloaded. Tells whether the Expr represents a Mathematica matrix. Works like the Mathematica function `MatrixQ`.    |
+| `NumberQ`             | Tells whether the Expr represents a Mathematica number. Works like the Mathematica function `NumberQ`.                |
+| `Part`                | Overloaded. Gives the Expr representing the specified part of this Expr. Works like the Mathematica function `Part`.  |
+| `Put`                 | Not intended for general use.                                                                                         |
+| `RationalQ`           | Tells whether the Expr represents a Mathematica Rational number.                                                     |
+| `RealQ`               | Tells whether the Expr represents a Mathematica Real number.                                                         |
+| `StringQ`             | Tells whether the Expr represents a Mathematica string. Works like the Mathematica function `StringQ`.                |
+| `SymbolQ`             | Tells whether the Expr represents a Mathematica symbol.                                                              |
+| `Take`                | Returns a new Expr that has the same head but only the first n elements of this Expr. Works like the Mathematica function `Take`. |
+| `ToString`            | Returns a representation of the Expr as a Mathematica `InputForm` string.                                             |
+| `TrueQ`               | Tells whether the Expr represents the Mathematica symbol True. Works like the Mathematica function `TrueQ`.           |
+| `VectorQ`             | Overloaded. Tells whether the Expr represents a Mathematica vector. Works like the Mathematica function `VectorQ`.    |
+
+
 (Referenced June 1st, 2024.)
 
