@@ -44,7 +44,7 @@ From [Calling the Wolfram Language from .NET](https://reference.wolfram.com/lang
 > The Expr class is a representation of arbitrary Mathematica expressions in .NET. Exprs are created by reading an expression from a link (using the GetExpr method), they can be decomposed into component Exprs with properties and methods like Head and Part, and their structure can be queried with methods like Length, NumberQ, and VectorQ. All these methods will be familiar to Mathematica programmers, and their Expr counterparts work similarly.
 > From [relevant WL reference](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html)
 
-## Project Structure
+## Project Structure and Usage
 
 Now we try some different MainImplementations do demonstratre so use cases.
 
@@ -56,6 +56,12 @@ WolframNETLink
 ├── MainImplementation2.cs
 └── MainImplementation3.cs
 ```
+
+### General Usage
+
+Follow the setup and start in Visual Studio, then select the implementation want to test out: You will see a Mathematical Kernel instance pop up in the background.
+
+![image](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/b4fe18ef-0cc9-4343-a994-b376c12e9933)
 
 ### MainImplementation1: PrimeFactor 
 
