@@ -37,7 +37,7 @@ I found that the post-build process _is_ necessary. (May 2024)
 
 > The Wolfram Symbolic Transfer Protocol (WSTP) is a platform-independent protocol for communicating between programs. In more concrete terms, it is a means to send and receive Wolfram Language **expressions**. WSTP is the means by which the notebook front end and kernel communicate with each other. It is also used by a large number of commercial and freeware applications and utilities that link the Wolfram Language and other programs or languages. It is implemented as a library of C-language functions. .NET/Link brings the capabilities of WSTP into .NET in a way that is simpler to use and much more powerful than the raw C-level API.
 
-From [Calling the Wolfram Language from .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (May 31st, 2024, my **highlight**: we look at expression handling on the .NET side in example 2 in the following)
+From [Calling the Wolfram Language from .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (May 31st, 2024, my **highlight**: we look at [expression](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) handling on the .NET side in example 2 in the following)
 
 ## Project Structure
 
@@ -53,4 +53,4 @@ WolframNETLink
 ```
 
 - **1**: Simple PrimeFactor example, interesting: conversion to array of the return values.
-- **2**: Expr tests! See 
+- **2**: Expr tests! See [Expression Wolfram Documentation](https://reference.wolfram.com/language/NETLink/ref/net/Wolfram.NETLink.Expr.html) that details how to handle representing WL expressions on the C# side.
