@@ -1,8 +1,10 @@
 # WolframNETLink 💥🔗 - Some Tests 🥼
 
-Let's look at calling Wolfram [Mathematica locally using .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (C#) by leveraging the Wolfram .NET/Link library. This allows for running Wolfram Language code directly from .NET applications. I'll want to compare this with WolframAlpha calls over http since the local approach does require some:
+Let's look at calling Wolfram [Mathematica locally using .NET](https://reference.wolfram.com/language/NETLink/tutorial/CallingTheWolframLanguageFromNET.html) (C#) by leveraging the Wolfram .NET/Link library. This allows for running Wolfram Language code directly from .NET applications. I'll want to compare this with WolframAlpha calls over http since the local approach does require some ...
 
 ## Setup
+
+(Find a reference for the main .NET/Link namespace at the end of this readme.)
 
 Mainly, point `.csproj` and provision extra dependencies like so, for MM **14.0** (and net8.0) - just add the ItemGroup and Target entries in you New Console Application in Visual Studio.
 
@@ -344,3 +346,51 @@ A note on tread safety as far as expressions go:
 
 >[!TIP]
 >Like Mathematica expressions, Exprs are immutable, meaning they can never be changed once they are created. Operations that might appear to modify an Expr (like Delete) return new modified Exprs without changing the original. Because Exprs are immutable, they are also thread-safe, meaning that any number of threads can access a given Expr at the same time.
+
+## The Main .NET/Link Namespace
+
+### .NET/Link API Version 1.7
+
+#### Classes
+
+| Class                        | Description                                                                                                                                    |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Expr`                       | A representation of arbitrary Mathematica expressions in .NET.                                                                                  |
+| `ExprFormatException`        | The exception thrown by the "AsXXX" methods of the Expr class (e.g., AsInt64, AsDouble, AsArray, etc.)                                         |
+| `MathDelegate`               | Contains the `CreateDelegate` method, which creates delegate objects that invoke a specified Mathematica function.                             |
+| `MathematicaNotReadyException` | This exception is thrown in `RequestTransaction` when the kernel is not in a state where it is receptive to calls that originate in .NET.     |
+| `MathKernel`                 | `MathKernel` is a non-visual component that provides a very high-level interface for interacting with Mathematica.                             |
+| `MathLinkException`          | The exception thrown by methods in the `IMathLink` and `IKernelLink` interfaces when a link error occurs.                                       |
+| `MathLinkFactory`            | `MathLinkFactory` is the class that is used to construct objects of the various link interfaces (`IKernelLink`, `IMathLink`, and `ILoopbackLink`). |
+| `NETLinkConstants`           | A handful of constants, including the .NET/Link version number.                                                                                |
+| `StdLink`                    | `StdLink` is a container for some methods and state related to the link back to the kernel.                                                    |
+| `TypeLoader`                 | `TypeLoader` is the class responsible for loading all assemblies and types from the Mathematica functions `LoadNETAssembly` and `LoadNETType`. |
+
+#### Interfaces
+
+| Interface   | Description                                                                                                   |
+|-------------|---------------------------------------------------------------------------------------------------------------|
+| `IKernelLink` | The link interface that most programmers will use.                                                           |
+| `ILinkMark`  | Represents a mark in the incoming MathLink data stream that you can seek back to.                             |
+| `ILoopbackLink` | Represents a special type of link known as a loopback link.                                                 |
+| `IMathLink`  | `IMathLink` is the low-level interface that is the root of all link objects in .NET/Link.                     |
+
+#### Delegates
+
+| Delegate       | Description                                                              |
+|----------------|--------------------------------------------------------------------------|
+| `MessageHandler` | Represents the method that will handle the `MessageArrived` event.       |
+| `PacketHandler` | Represents the method that will handle the `PacketArrived` event.        |
+| `YieldFunction` | Represents the method that will handle the `Yield` event.                |
+
+#### Enumerations
+
+| Enumeration                  | Description                                                                                              |
+|------------------------------|----------------------------------------------------------------------------------------------------------|
+| `ExpressionType`             | Designates the type of a Mathematica expression being read or written on a link, or in an `Expr`.        |
+| `MathKernel.ResultFormatType` | Values for the `ResultFormat` property. These values specify the format in which results from computations should be returned. |
+| `MathLinkMessage`            | Designates the type of a low-level MathLink message.                                                     |
+| `PacketType`                 | Designates a MathLink packet type. Used by the `PacketHandler` delegate, and returned by `NextPacket`.    |
+
+© 2003-2024, Wolfram Research, Inc.
+
