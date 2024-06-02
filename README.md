@@ -406,6 +406,13 @@ WolframLogic
 + Stop
 ```
 
+@startuml firstDiagram
+
+Alice -> Bob: Hello
+Bob -> Alice: Hi!
+
+@enduml
+
 ## Appendix: The Main .NET/Link Namespace
 
 ### .NET/Link API Version 1.7
