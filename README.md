@@ -376,7 +376,7 @@ Console.WriteLine("Expression as a string: " + result.StringQ());
 
 ### MainImplementation3: Async Programming
 
-**Full-fledged async example with callback/delagate firing**
+**Full-fledged async example with callback/delagate firing (Observer Pattern)**
 
 A note on tread safety as far as expressions go:
 
@@ -409,6 +409,76 @@ WolframLogic
 This class:
 - Contains fields for random number generation, timer, and kernel link.
 - Contains methods for handling elapsed time (`HandleElapsedAsync`), getting the next expression (`NextExpression`), evaluating expressions asynchronously (`EvaluateExpressionAsync`), starting the logic (`StartAsync`), and stopping it (`Stop`).
+
+Chaining the expressions is accomplished with this method:
+
+```
+private async Task HandleElapsedAsync()
+{
+    var expression = NextExpression();
+    var result = await EvaluateExpressionAsync(expression);
+    OnNewEvaluation?.Invoke(result);
+}
+```
+
+The `EvaluateExpressionAsnyc` method called implements the templeta code elaborated previously:
+
+```
+private async Task<string> EvaluateExpressionAsync(string expression)
+{
+    return await Task.Run(() =>
+    {
+        try
+        {
+            _ml.WaitAndDiscardAnswer();
+            _ml.Evaluate(expression);
+            _ml.WaitForAnswer();
+            var result = _ml.GetExpr().ToString();
+            return result;
+        }
+        catch (MathLinkException e)
+        {
+            return $"MathLinkException: {e.Message}";
+        }
+    });
+}
+```
+
+The interface defined for WolframLogic:
+
+```
+public interface IWolframLogic
+{
+    event NewEvaluationEventHandler OnNewEvaluation;
+}
+```
+
+This is the crux, allowing for the **Observer Pattern** to be implemented, because `MainImplementation3` defines what should happen (via lambdas) - at the correct moment, given by the observed object (`WolframLogic`). This lambda is defined in the slot `IWolframLogic` provides, `OnNewEvaluation`:
+
+```
+public static class MainImplementation3
+{
+    public static async Task Run()
+    {
+        var wolframLogic = new WolframLogic();
+        wolframLogic.OnNewEvaluation += (result) =>
+        {
+            Console.WriteLine($"New Evaluation Result: {result}");
+        };
+
+        wolframLogic.OnNewEvaluation += (result) =>
+        {
+            // send logic
+            Console.WriteLine("   - sending now ... sent.");
+        };
+
+        await wolframLogic.StartAsync();
+        Console.WriteLine("Press Enter to exit.");
+        Console.ReadLine();
+        wolframLogic.Stop();
+    }
+}
+```
 
 ## Appendix: The Main .NET/Link Namespace
 
