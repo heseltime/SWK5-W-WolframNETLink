@@ -480,6 +480,8 @@ public static class MainImplementation3
 }
 ```
 
+![UML Visualization of the Observer Pattern Implemented](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/c8dcde84-9549-4a3a-8804-cbc461d182d9)
+
 ## Appendix: The Main .NET/Link Namespace
 
 ### .NET/Link API Version 1.7
