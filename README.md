@@ -383,6 +383,29 @@ A note on tread safety as far as expressions go:
 >[!TIP]
 >Like Mathematica expressions, Exprs are immutable, meaning they can never be changed once they are created. Operations that might appear to modify an Expr (like Delete) return new modified Exprs without changing the original. Because Exprs are immutable, they are also thread-safe, meaning that any number of threads can access a given Expr at the same time.
 
+Here we want to check a use case like the following:
+
+```
+Main --> (Task.WaitAll:) RunImplementation3: Task --> MainImplementation3: Task --> Run: Task --> Wolfram Logic
+```
+
+Where:
+
+```
+WolframLogic
+-------------------------------------------
+- Random _random
+- Timer _timer
+- IKernelLink _ml
++ NewEvaluationEventHandler OnNewEvaluation
+-------------------------------------------
+- HandleElapsedAsnyc: Task
+- NextExpression: string
+- EvaluateExpressionAsync: Task<string>
++ StartAsync: Task
++ Stop
+```
+
 ## Appendix: The Main .NET/Link Namespace
 
 ### .NET/Link API Version 1.7
