@@ -406,12 +406,9 @@ WolframLogic
 + Stop
 ```
 
-@startuml firstDiagram
-
-Alice -> Bob: Hello
-Bob -> Alice: Hi!
-
-@enduml
+This class:
+- Contains fields for random number generation, timer, and kernel link.
+- Contains methods for handling elapsed time (`HandleElapsedAsync`), getting the next expression (`NextExpression`), evaluating expressions asynchronously (`EvaluateExpressionAsync`), starting the logic (`StartAsync`), and stopping it (`Stop`).
 
 ## Appendix: The Main .NET/Link Namespace
 
