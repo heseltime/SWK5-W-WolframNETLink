@@ -4,7 +4,7 @@ Let's look at calling Wolfram [Mathematica locally using .NET](https://reference
 
 ## Setup
 
-(Find a reference for the main .NET/Link namespace at the end of this readme - the Wolfram docs center also has a helpful [overall guide about .NET/Link](https://reference.wolfram.com/language/NETLink/tutorial/Overview.html), covering both Calling .NET from the Wolfram Language (in more detail) and Calling the Wolfram Language from .NET (the subject of this document).)
+(Find a reference for the main .NET/Link namespace at the end of this readme - the Wolfram docs center also has a helpful [overall guide about .NET/Link](https://reference.wolfram.com/language/NETLink/tutorial/Overview.html), covering both Calling .NET from the Wolfram Language (in more detail) and Calling the Wolfram Language from .NET (the subject of this document and demo).)
 
 Mainly, point `.csproj` and provision extra dependencies like so, for MM **14.0** (and net8.0) - just add the ItemGroup and Target entries in you New Console Application in Visual Studio.
 
