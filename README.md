@@ -4,7 +4,7 @@ Let's look at calling Wolfram [Mathematica locally using .NET](https://reference
 
 ## Setup
 
-(Find a reference for the main .NET/Link namespace at the end of this readme.)
+(Find a reference for the main .NET/Link namespace at the end of this readme - the Wolfram docs center also has a helpful [overall guide about .NET/Link](https://reference.wolfram.com/language/NETLink/tutorial/Overview.html), covering both Calling .NET from the Wolfram Language (in more detail) and Calling the Wolfram Language from .NET (the subject of this document and demo).)
 
 Mainly, point `.csproj` and provision extra dependencies like so, for MM **14.0** (and net8.0) - just add the ItemGroup and Target entries in you New Console Application in Visual Studio.
 
@@ -376,14 +376,113 @@ Console.WriteLine("Expression as a string: " + result.StringQ());
 
 ### MainImplementation3: Async Programming
 
-**Full-fledged async example with callback/delagate firing**
+**Full-fledged async example with callback/delagate firing (Observer Pattern)**
 
 A note on tread safety as far as expressions go:
 
 >[!TIP]
 >Like Mathematica expressions, Exprs are immutable, meaning they can never be changed once they are created. Operations that might appear to modify an Expr (like Delete) return new modified Exprs without changing the original. Because Exprs are immutable, they are also thread-safe, meaning that any number of threads can access a given Expr at the same time.
 
-## The Main .NET/Link Namespace
+Here we want to check a use case like the following:
+
+```
+Main --> (Task.WaitAll:) RunImplementation3: Task --> MainImplementation3: Task --> Run: Task --> Wolfram Logic
+```
+
+Where:
+
+```
+WolframLogic
+-------------------------------------------
+- Random _random
+- Timer _timer
+- IKernelLink _ml
++ NewEvaluationEventHandler OnNewEvaluation
+-------------------------------------------
+- HandleElapsedAsnyc: Task
+- NextExpression: string
+- EvaluateExpressionAsync: Task<string>
++ StartAsync: Task
++ Stop
+```
+
+This class:
+- Contains fields for random number generation, timer, and kernel link.
+- Contains methods for handling elapsed time (`HandleElapsedAsync`), getting the next expression (`NextExpression`), evaluating expressions asynchronously (`EvaluateExpressionAsync`), starting the logic (`StartAsync`), and stopping it (`Stop`).
+
+Chaining the expressions is accomplished with this method:
+
+```
+private async Task HandleElapsedAsync()
+{
+    var expression = NextExpression();
+    var result = await EvaluateExpressionAsync(expression);
+    OnNewEvaluation?.Invoke(result);
+}
+```
+
+The `EvaluateExpressionAsnyc` method called implements the templeta code elaborated previously:
+
+```
+private async Task<string> EvaluateExpressionAsync(string expression)
+{
+    return await Task.Run(() =>
+    {
+        try
+        {
+            _ml.WaitAndDiscardAnswer();
+            _ml.Evaluate(expression);
+            _ml.WaitForAnswer();
+            var result = _ml.GetExpr().ToString();
+            return result;
+        }
+        catch (MathLinkException e)
+        {
+            return $"MathLinkException: {e.Message}";
+        }
+    });
+}
+```
+
+The interface defined for WolframLogic:
+
+```
+public interface IWolframLogic
+{
+    event NewEvaluationEventHandler OnNewEvaluation;
+}
+```
+
+This is the crux, allowing for the **Observer Pattern** to be implemented, because `MainImplementation3` defines what should happen (via lambdas) - at the correct moment, given by the observed object (`WolframLogic`). This lambda is defined in the slot `IWolframLogic` provides, `OnNewEvaluation`:
+
+```
+public static class MainImplementation3
+{
+    public static async Task Run()
+    {
+        var wolframLogic = new WolframLogic();
+        wolframLogic.OnNewEvaluation += (result) =>
+        {
+            Console.WriteLine($"New Evaluation Result: {result}");
+        };
+
+        wolframLogic.OnNewEvaluation += (result) =>
+        {
+            // send logic
+            Console.WriteLine("   - sending now ... sent.");
+        };
+
+        await wolframLogic.StartAsync();
+        Console.WriteLine("Press Enter to exit.");
+        Console.ReadLine();
+        wolframLogic.Stop();
+    }
+}
+```
+
+![UML Visualization of the Observer Pattern Implemented](https://github.com/heseltime/SWK5-W-WolframNETLink/assets/66922223/c8dcde84-9549-4a3a-8804-cbc461d182d9)
+
+## Appendix: The Main .NET/Link Namespace
 
 ### .NET/Link API Version 1.7
 
