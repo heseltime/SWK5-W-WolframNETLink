@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Wolfram.NETLink;
 
 namespace WolframNETLink
 {
-    public delegate void NewEvaluationEventHandler(string result);
+    public delegate void NewEvaluationEventHandler(string result);  // delegate type defines signature:
+                                                                    //  event handlers match this signature
 
     public interface IWolframLogic
     {
-        event NewEvaluationEventHandler OnNewEvaluation;
+        event NewEvaluationEventHandler OnNewEvaluation;            // event type enables the class or object
+                                                                    //  to notify other classes or objects,
+                                                                    //  based on delegates
+                                                                    //  ... typically named OnXEvent,
+                                                                    //      declaration with event keyword,
+                                                                    //      followed by delegate type 
+                                                                    //      - then name.
     }
 
     public class WolframLogic : IWolframLogic
@@ -23,7 +28,6 @@ namespace WolframNETLink
             "Sin[Pi/4]^2 + Cos[Pi/4]^2"
         };
         private readonly Random _random = new Random();
-        private readonly System.Timers.Timer _timer;
         private readonly IKernelLink _ml;
 
         public event NewEvaluationEventHandler OnNewEvaluation;
@@ -31,17 +35,19 @@ namespace WolframNETLink
         public WolframLogic()
         {
             _ml = MathLinkFactory.CreateKernelLink();
-            _timer = new System.Timers.Timer(30000); // 1/2 minute interval
-            _timer.Elapsed += async (sender, e) => await HandleElapsedAsync();
-            _timer.AutoReset = true;
-            _timer.Enabled = true;
         }
 
-        private async Task HandleElapsedAsync()
+        public async Task StartAsync()
         {
-            var expression = NextExpression();
-            var result = await EvaluateExpressionAsync(expression);
-            OnNewEvaluation?.Invoke(result);
+            while (true)
+            {
+                var expression = NextExpression();
+                var result = await EvaluateExpressionAsync(expression);
+
+                OnNewEvaluation?.Invoke(result);  // Fire the event to notify subscribers of the new evaluation result
+
+                await Task.Delay(30000);  // Delay to simulate time-consuming evaluation, or can be adjusted as needed
+            }
         }
 
         private string NextExpression()
@@ -69,14 +75,8 @@ namespace WolframNETLink
             });
         }
 
-        public async Task StartAsync()
-        {
-            await Task.Run(() => _timer.Start());
-        }
-
         public void Stop()
         {
-            _timer.Stop();
             _ml.Close();
         }
     }
